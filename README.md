@@ -31,7 +31,7 @@ subject to:
 where Sigma is one of three annualised covariance matrices (Sample, Ledoit-Wolf, or OAS)
 and mu is the expected-return vector:
 
-- Simulated dataset: FICO metadata mu (mu_native), main specification
+- Simulated dataset: metadata mu (mu_native), main specification
 - Bloomberg dataset: 3-year trailing winsorised empirical mean (mu_trailing_winsor), main specification
 
 The problem is solved by Gurobi 13 via cvxpy. The MIP optimality gap is set to 0.01% with
@@ -55,7 +55,7 @@ both datasets.
 
 The analysis uses two independent datasets.
 
-**Simulated dataset**: a universe of approximately 2,300 synthetic stocks with FICO-generated
+**Simulated dataset**: a universe of approximately 2,300 synthetic stocks
 expected returns, ESG scores on a 0-100 scale, and synthetic price history (~5,000 daily
 observations).
 
