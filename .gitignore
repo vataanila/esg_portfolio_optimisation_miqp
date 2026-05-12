@@ -27,9 +27,12 @@ ENV/
 *.secret
 secrets.json
 
-# ─── Gurobi solver ────────────────────────────────────────────────────────────
+# ─── Solver files and licences ────────────────────────────────────────────────
 gurobi.log
 gurobi.lic
+xpauth.xpr
+*.lic
+license_xpress/
 *.lp
 *.mps
 *.rlp
