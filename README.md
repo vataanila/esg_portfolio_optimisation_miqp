@@ -1,13 +1,13 @@
 # ESG-Constrained Portfolio Optimisation with MIQP
 
+## Why I built this project
+
+I developed this project to understand how ESG constraints affect portfolio construction when realistic investment rules are added to a classical mean-variance framework. My focus was not only on solving the optimisation problem, but also on building a reproducible pipeline from raw financial data to out-of-sample portfolio evaluation.
+
+
 ## Overview
 
-This project studies ESG-constrained portfolio optimisation using Mixed-Integer Quadratic
-Programming (MIQP). I apply the same optimisation framework to a simulated equity universe
-and to Bloomberg EURO STOXX 600 data (2016-2025). The analysis compares three covariance
-estimators, studies the effect of ESG floors on risk-adjusted returns, and evaluates portfolios
-out of sample using stationary block bootstrap inference. The results should be read as
-research outputs, not investment advice.
+This project applies constrained portfolio optimisation to two equity universes: a simulated dataset and a Bloomberg EURO STOXX 600 dataset. The goal is to analyse how ESG requirements, sector caps, cardinality constraints and covariance estimation choices affect the efficient frontier and out-of-sample portfolio performance.
 
 ## Methodology
 
@@ -31,8 +31,8 @@ subject to:
 where Sigma is one of three annualised covariance matrices (Sample, Ledoit-Wolf, or OAS)
 and mu is the expected-return vector:
 
-- Simulated dataset: metadata mu (mu_native), main specification
-- Bloomberg dataset: 3-year trailing winsorised empirical mean (mu_trailing_winsor), main specification
+- Simulated dataset: expected returns provided in the metadata file.
+- Bloomberg dataset: 3-year trailing winsorised empirical mean (mu_trailing_winsor), main specification.
 
 The problem is solved by Gurobi 13 via cvxpy. The MIP optimality gap is set to 0.01% with
 a 120-second time limit per solve.
@@ -55,7 +55,7 @@ both datasets.
 
 The analysis uses two independent datasets.
 
-**Simulated dataset**: a universe of approximately 2,300 synthetic stocks
+**Simulated dataset**: a universe of approximately 2,300 synthetic stocks with
 expected returns, ESG scores on a 0-100 scale, and synthetic price history (~5,000 daily
 observations).
 
@@ -117,17 +117,14 @@ the Bloomberg OOS scripts (09 and 10), mu is also re-estimated on the training w
 a trailing mean winsorised at p1/p99. Weights are frozen (optimised on the train-window
 covariance) and applied to test-period returns to obtain realised performance metrics.
 
-The IS-OOS Sharpe gap measures the degree to which in-sample optimisation overfits the
-estimated covariance structure.
+The IS-OOS Sharpe gap is used as a simple diagnostic for potential overfitting. It helps assess whether the portfolio performs materially worse out of sample than it does in sample.
 
 ## Bootstrap inference
 
 Statistical uncertainty around OOS Sharpe ratios is quantified via stationary block bootstrap
 (Politis and Romano, 1994) with B = 1,000 resamples and a fixed block length of 21 trading
 days, approximately one trading month. The bootstrap resamples OOS daily portfolio returns
-and recomputes the annualised Sharpe ratio in each resample. A 95% confidence interval
-overlapping zero indicates that the Sharpe ratio is not statistically distinguishable from
-zero at the 5% level.
+and recomputes the annualised Sharpe ratio in each resample. If the 95% confidence interval includes zero, the evidence for a positive OOS Sharpe ratio is weak at conventional significance levels.
 
 ## How to run
 
