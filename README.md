@@ -123,18 +123,18 @@ estimated covariance structure.
 ## Bootstrap inference
 
 Statistical uncertainty around OOS Sharpe ratios is quantified via stationary block bootstrap
-(Politis and Romano, 1994) with B = 1,000 resamples. The block length is selected
-automatically by the arch library. The bootstrap resamples OOS daily returns, preserving
-autocorrelation structure, and recomputes the annualised Sharpe ratio in each resample. A
-95% confidence interval overlapping zero indicates the Sharpe ratio is not statistically
-distinguishable from zero at the 5% level.
+(Politis and Romano, 1994) with B = 1,000 resamples and a fixed block length of 21 trading
+days, approximately one trading month. The bootstrap resamples OOS daily portfolio returns
+and recomputes the annualised Sharpe ratio in each resample. A 95% confidence interval
+overlapping zero indicates that the Sharpe ratio is not statistically distinguishable from
+zero at the 5% level.
 
 ## How to run
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/esg-portfolio-optimisation.git
-cd esg-portfolio-optimisation
+git clone https://github.com/vataanila/esg_portfolio_optimisation_miqp.git
+cd esg_portfolio_optimisation_miqp
 
 # 2. Create and activate a virtual environment
 python -m venv .venv
@@ -213,7 +213,7 @@ variables). Free academic licences are available at gurobi.com.
 ## Author
 
 Anila Vata
-MSc Quantitative Finance, University of Pavia
+MSc Finance, University of Pavia
 
 ## References
 
